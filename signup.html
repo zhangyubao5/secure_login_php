@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="../resource/css/animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="../resource/css/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="info" style="color:red;"></div>
+    <div class="register-box">
+      <form action="signup.php" method="post">
+        <table>
+          <tr>
+            <td>
+            <label for="role">Role: </label>
+            </td>
+            <td>
+            <select name="rolename">
+              <option value="reader" selected>Reader</option>
+              <option value="author">Author</option>
+              <option value="moderator">Moderator</option>
+              <option value="admin">Admin</option>
+            </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+        <label for="username">Username: </label>
+        </td>
+        <td>
+        <input type="text" name="username" placeholder="username, e.g. admin"></input>
+        </td>
+        </tr>
+        <tr>
+          <td>
+        <label for="password">Password: </label>
+        </td>
+        <td>
+        <input type="password" name="password" placeholder="password"></input>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label for="password">Confirm Password: </label>
+        </td>
+        <td>
+        <input type="password" id="password_again" placeholder="password again"></input>
+        </td>
+        </tr>
+        </table>
+        <button type="submit">Register</button>
+        <button id="clean">Clean</button>
+      </form>
+      <div>
+        <h3>Password requirements: </h3>
+        <p> 1) Be at least six characters long
+        <br />
+             2) Contain a combination of at least three of the following characters: uppercase letters, lowercase letters, numbers, symbols (punctuation marks)
+         <br />  3) Don't contain the user's user name or screen name</p>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    $.ready(function(){});
+    $("form").submit(function(event){
+      var p1 = $("input[name=password]").val();
+      var p2 = $("#password_again").val();
+      if(p1!=p2){
+        $(".info").html("Password not match!");
+        event.preventDefault();
+      }
+      //var password = $("#password").html();
+      if(p1.length<6 || (/[a-z]/i.test(p1)==-1) || 
+      (/[A-Z]/i.test(p1)==-1) || (/[0-9]/i.test(p1)==-1)) {
+        $(".info").html("Password is not strong enough!");
+        event.preventDefault();
+      }
+    });
+    $("#clean").click(function(){
+      location.reload();
+    });
+  </script>>
+</html>

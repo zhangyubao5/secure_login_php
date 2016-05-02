@@ -1,0 +1,51 @@
+<html>
+     <head>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha256.js"></script>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+           <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+           <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+           <script src="../resource/js/js.cookie.js"></script>
+           <script type="text/javascript">
+                $(document).ready(function(){
+                     
+                });
+                var submitform = function(){
+                    var username = $("#username").val();
+                     var balab = $("#password").val();
+                     var salt = "salt";
+                     var stretch = 2;
+                     var str =  CryptoJS.enc.Utf8.parse('0');
+                     var psalt = CryptoJS.enc.Utf8.parse(balab + salt);
+                     var flag=0;
+                    for (var i=0;i<stretch;i+=1) {
+                         str = CryptoJS.SHA256(str.concat(psalt));
+                    }
+                    str = str.toString();
+                     $("#output2").html(str);
+                     var hashedusername = CryptoJS.SHA256(username).toString();
+                     var len = hashedusername.length;
+                     var last8char = parseInt(hashedusername.substr(len-9,len-1));
+                     $("#output1").html(hashedusername.words[hashedusername.words.length-1]);
+                };
+               var hex2str = function(hexx) {
+                   var hex = hexx.toString();//force conversion
+                   var str = '';
+                   for (var i = 0; i < hex.length; i += 2)
+                       str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+                   return str;
+               }
+           </script>
+     </head>
+     <body>
+          <form method="post" id="loginform">
+               <input id="username" type="text" name="username" placeholder="username"/>
+               <input id="password" type="password" name="password" placeholder="password"/>
+               <a id="submit" href="javascript: submitform()">Submit</a>
+          </form>
+          <div id="output1">
+          </div>
+          <br /><br />
+          <div id="output2">
+          </div>
+     </body>
+</html>

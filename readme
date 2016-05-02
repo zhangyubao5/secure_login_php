@@ -1,0 +1,26 @@
+0. password requirement
+     1) Be at least six characters long
+     2) Contain a combination of at least three of the following characters: uppercase letters, lowercase letters, numbers, symbols (punctuation marks)
+     3) Don't contain the user's user name or screen name
+     
+1. hash: 
+     (1) password in db
+     (2) password in client side
+     (3) 
+     
+2. sql injection
+     1). Comprehensive data sanitization. Web sites must filter all user input. Ideally, user data should be filtered for context. For example, e-mail addresses should be filtered to allow only the characters allowed in an e-mail address, phone numbers should be filtered to allow only the characters allowed in a phone number, and so on.
+     
+     2). Use a web application firewall. A popular example is the free, open source module ModSecurity which is available for Apache, Microsoft IIS, and nginx web servers. ModSecurity provides a sophisticated and ever-evolving set of rules to filter potentially dangerous web requests. Its SQL injection defenses can catch most attempts to sneak SQL through web channels.
+     
+     3). Limit database privileges by context. Create multiple database user accounts with the minimum levels of privilege for their usage environment. For example, the code behind a login page should query the database using an account limited only to the relevent credentials table. This way, a breach through this channel cannot be leveraged to compromise the entire database.
+     
+     4). Avoid constructing SQL queries with user input. Even data sanitization routines can be flawed. Ideally, using SQL variable binding with prepared statements or stored procedures is much safer than constructing full queries.
+          But it you want to tell PDO to do it straight way, to use real prepared statements, you have to set this setting:
+          $dbh->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
+          $db->prepare("SELECT * FROM users where id=?");
+     
+     Any one of these defenses significantly reduces the chances of a successful SQL injection attack. Implementing all four is a best practice that will provide an extremely high degree ofprotection. Despite its widespread use, your web site does not have to be SQL injection's next victim.
+
+
+3. oauth login 

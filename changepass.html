@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="../resource/css/animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="../resource/css/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="info" style="color:red;"></div>
+    <div class="register-box">
+      <form action="changepass.php" method="post">
+        <label for="username">Username: </label>
+
+        <input type="text" name="username" placeholder="username, e.g. admin"></input>
+        <br />
+        <label for="password">Password: </label>
+        <input type="password" name="password" placeholder="password"></input>
+        <br />
+        <label for="password">New password</label>
+        <input type="password" name="newpassword" placeholder="new password"></input>
+        <input type="password" id="newpassword_again" placeholder="new password again"></input>
+        <br />
+        <button type="submit">Change password</button>
+        <button id="clean">Clean</button>
+      </form>
+      <div>
+        <h3>Password requirements: </h3>
+        <p> 1) Be at least six characters long
+        <br />
+             2) Contain a combination of at least three of the following characters: uppercase letters, lowercase letters, numbers, symbols (punctuation marks)
+         <br />  3) Don't contain the user's user name or screen name</p>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    $.ready(function(){});
+    $("form").submit(function(event){
+      var p1 = $("input[name=newpassword]").val();
+      var p2 = $("#newpassword_again").val();
+      if(p1!=p2){
+        $(".info").html("New password not match!");
+        event.preventDefault();
+      }
+      //var password = $("#password").html();
+      if(p1.length<6 || (/[a-z]/i.test(p1)==-1) || 
+      (/[A-Z]/i.test(p1)==-1) || (/[0-9]/i.test(p1)==-1)) {
+        $(".info").html("New password is not strong enough!");
+        event.preventDefault();
+      }
+    });
+    $("#clean").click(function(){
+      location.reload();
+    });
+  </script>>
+</html>
