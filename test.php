@@ -57,9 +57,11 @@ if (!isset($_SESSION["cookie"]))
 
 unset($_COOKIE["sid"]);
 
-echo "<pre>";
+echo "<html>";
+echo "<body>";
 echo json_encode($_COOKIE, JSON_PRETTY_PRINT);
 echo json_encode($_SESSION, JSON_PRETTY_PRINT);
-echo "</pre>";
+echo "</body>";
+echo "</html>";
 
 ?>
