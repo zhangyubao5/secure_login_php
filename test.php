@@ -55,7 +55,7 @@ $_SESSION["php"] = "Hello from PHP";
 if (!isset($_SESSION["cookie"]))
   $_SESSION["cookie"] = array();
 
-//unset($_COOKIE["sid"]);
+unset($_COOKIE["sid"]);
 
 echo "<html>";
 echo "<body>";
