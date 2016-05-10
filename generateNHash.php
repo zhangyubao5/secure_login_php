@@ -55,6 +55,9 @@
           $iter = rand(1000, 10000);
           $hash = generate($iter, $word, $salt);
           $sth = $db->prepare("insert into users(username, salt,stretch,hash,roleid) values( :username, :salt, :iter, :hash, :roleid);");
+          if (is_null($sth)) {
+               die("PDO prepare failed.");
+          }
           $sth->bindParam(":username", $username,PDO::PARAM_STR, 100);
           $sth->bindParam(":salt", $salt,PDO::PARAM_STR, 100);
           $sth->bindParam(":iter", $iter,PDO::PARAM_STR, 100);
@@ -62,8 +65,9 @@
           $sth->bindParam(":roleid", $role, PDO::PARAM_STR, 100);
           $sth->execute();
           echo "<div>Sign up successfully.</div>";
+          //header("Location: login.html");
      }
-     
+     //A123456
      function generateNHashChangePass($username=null, $word=null) {
           if ($username==null) {
                die("No username.");

@@ -1,4 +1,6 @@
 <?php
+  //session_start();
+
    //header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
    // this must match the express-session `secret` in your Express app
    define('EXPRESS_SECRET', 'node.js rules');
@@ -6,7 +8,7 @@
    // the session using the right id
    define('REDIS_SESSION_ID_MUTATOR', 'express_mutator');
    function express_mutator($id) {
-        echo("before express id: $id <br/>");
+        //echo("before express id: $id <br/>");
      if (substr($id, 0, 2) === "s:")
        $id = substr($id, 2);
      $dot_pos = strpos($id, ".");
@@ -14,16 +16,23 @@
        $hmac_in = substr($id, $dot_pos + 1);
        $id = substr($id, 0, $dot_pos);
      }
-     echo("after express id: $id <br/>");
+     //echo("after express id: $id <br/>");
      return $id;
    }
    
    // check for existing express-session cookie ...
    $sess_name = session_name();
-   echo("Session name: $sess_name <br/>");
-   echo("Cookie name: $_COOKIE[$sess_name] <br/>");
+   //echo("Session name: $sess_name <br/>");
+   //echo("Cookie name: $_COOKIE[$sess_name] <br/>");
    //unset($_COOKIE[$sess_name]);
-   if (isset($_COOKIE[$sess_name])) {
+   //var_dump($_COOKIE[$sess_name]);
+   if (isset($_COOKIE) && isset($_COOKIE[$sess_name])) {
+    if (strlen($_COOKIE[$sess_name])!=32) {
+      unset($_COOKIE[$sess_name]);
+    }
+   }
+   //var_dump($sess_name);
+   if (isset($_COOKIE) && isset($_COOKIE[$sess_name])) {
      // here we have to manipulate the cookie data in order for
      // the lookup in redis to work correctly
      // since express-session forces signed cookies now, we have
@@ -49,10 +58,14 @@
      //$sess_id = session_id();
      $sessHandlerInst=new SessionHandler();
      $sess_id=$sessHandlerInst->create_sid();
-     echo("Generate session id $sess_id <br/>");
+     //$sess_id = SessionHandler::create_sid();
+     var_dump($sess_id);
+     //echo("Generate session id $sess_id <br/>");
      $hmac = str_replace("=", "", base64_encode(hash_hmac('sha256', $sess_id, EXPRESS_SECRET, true)));
+     var_dump($hmac);
      // format it according to the express-session signed cookie format
      session_id("s:$sess_id.$hmac");
+     var_dump(session_id());
    }
    
    require('redis-session-php/redis-session.php');
@@ -74,6 +87,9 @@
        $roleid = $result[0]["roleid"];
        $statement->closeCursor();
        $_SESSION["roleid"] = $roleid;
+       if (!isset($_SESSION["cookie"])){
+          $_SESSION["cookie"] = array();
+        }
      //   $sid = $_COOKIE['PHPSESSID'];
      //  //echo "<h3>Welcome, </h3><h4>".$_COOKIE['PHPSESSID']."</h4>";
       
@@ -96,7 +112,7 @@
       
       //setcookie("sid", $sid, time() + 60*60*24*30, '/');
       //header("Location: https://mongo-nodejs-zhangyubao5.c9users.io:8080/ng_index.html");
-      //header("Location: https://mongo-nodejs-zhangyubao5.c9users.io:8080/ng_index.html");
+      header("Location: http://128.4.27.23:3000/ng_index.html");
       //define("COOKIE_FILE", "cookie.txt");
    } else {
       $_SESSION["logged_in"] = false;

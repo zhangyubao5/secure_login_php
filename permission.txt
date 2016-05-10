@@ -1,0 +1,4 @@
+admin (can do anything)
+author (can CRUD posts)
+user (can read topics, posts, comments, can create comments)
+moderator (can revoke author status, can CRUD topics)
