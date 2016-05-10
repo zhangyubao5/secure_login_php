@@ -26,6 +26,7 @@
    //echo("Cookie name: $_COOKIE[$sess_name] <br/>");
    //unset($_COOKIE[$sess_name]);
    //var_dump($_COOKIE[$sess_name]);
+<<<<<<< HEAD
    if (isset($_COOKIE) && isset($_COOKIE[$sess_name])) {
     if (strlen($_COOKIE[$sess_name])!=32) {
       unset($_COOKIE[$sess_name]);
@@ -33,6 +34,13 @@
    }
    //var_dump($sess_name);
    if (isset($_COOKIE) && isset($_COOKIE[$sess_name])) {
+=======
+   if (strlen($_COOKIE[$sess_name])!=32) {
+     unset($_COOKIE[$sess_name]);
+     //setcookie("sess_name", null, -1 , '/');
+   }
+   if (isset($_COOKIE[$sess_name])) {
+>>>>>>> 7d5022500fc66f47c5008bcd5f8b733169b67994
      // here we have to manipulate the cookie data in order for
      // the lookup in redis to work correctly
      // since express-session forces signed cookies now, we have
